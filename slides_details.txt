@@ -1,0 +1,143 @@
+Business Objective
+
+	Legacy modernization
+	The goal was to move away from tightly coupled Java/.Net legacy systems and adopt a modern, flexible Python and React-based platform that is easier to maintain and enhance.
+
+	Platform scalability
+	The legacy platform struggled with scale, especially with growing loan volumes. The new architecture is designed to handle high data loads and future growth more efficiently.
+
+	Business continuity
+	A key requirement was ensuring no disruption to ongoing trade booking and reporting while the migration was happening.
+
+What We Migrated
+
+	Mortgage trade booking
+	Core trade booking flows for mortgage loans were migrated to the new platform, covering how trades are created and processed.
+
+	Loan lifecycle flows
+	This includes pre-closing, settlement, remittance, and lifecycle state changes that happen throughout a loan’s life.
+
+	Risk & reporting
+	Risk and reporting data structures were aligned so the new system could support downstream risk calculations and reporting needs.
+
+Our Approach
+
+	Python-based backend
+	We reimplemented backend services in Python, focusing on clean class design and business-driven flow handling.
+
+	React web UI
+	A new React-based UI was built to support modern user interactions and better usability compared to the legacy UI.
+
+	Event-driven architecture
+	Instead of tightly coupled calls, we used messaging and events to drive business flows and state transitions.
+
+	Object-oriented data
+	Data modeling shifted from large relational tables to object-oriented classes that better represent business concepts.
+
+Key Challenges
+
+	Complex legacy events
+	The legacy system triggered many Java events during trade booking, and understanding how they were linked was a major challenge.
+
+	Large data footprint
+	The application had over 1000 SQL Server tables, making data mapping and restructuring complex.
+
+	Dual-system operations
+	Both legacy and new systems needed to run in parallel, requiring careful synchronization and data consistency.
+
+How We Delivered
+
+	Cross-team collaboration
+	This was one of the first large initiatives involving multiple teams, requiring frequent alignment and shared understanding.
+
+	Agile execution model
+	We followed scrum practices with daily stand-ups, prioritized Jira items, and clear Day-1 and Day-2 deliveries.
+
+	Flow-driven design
+	Business and technical flow diagrams were created and refined to guide architecture and development decisions.
+
+Outcome & Readiness
+
+	Scalable modern platform
+	The new system is modular, extensible, and better suited for future enhancements.
+
+	Legacy system synced
+	Data is backported to the legacy application so critical functions can continue without interruption.
+
+	Stress-tested at scale
+	The system was tested with heavy data loads, supporting ~200,000 loan deals to validate performance and stability.
+
+Leadership Takeaway (How to say it)
+
+This project shows that we can modernize a mission-critical platform while keeping business running, collaborating across teams, and laying a strong foundation for future growth.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+General QnA
+
+Architecture & Design – Likely Questions
+
+	Q: Why did we choose Python for the backend?
+	Python gave us faster development cycles, better readability, and flexibility for building business-driven flows. It also fits well with object-oriented modeling and messaging-based architectures, which was hard to evolve in the legacy stack.
+
+	Q: Why React for the UI?
+	React allows component-based development, better state management, and improved user experience. It also decouples UI changes from backend logic, making future enhancements easier.
+
+	Q: Why move to an event-driven approach?
+	In the legacy system, business actions triggered tightly coupled Java events that were hard to trace and modify. Using messaging allowed us to clearly define business flows, track state progression, and make the system more resilient.
+
+Data & Modeling – Likely Questions
+
+	Q: How did we handle the large RDBMS structure?
+	Instead of replicating all tables, we identified business-relevant data sets and grouped them into domain-based classes. This reduced complexity and aligned data with how the business actually operates.
+
+	Q: How is data persisted in the new system?
+	Data is stored based on class structure and attribute mapping in the new database, rather than direct table-to-table mapping from SQL Server.
+
+	Q: Why object-oriented data instead of relational modeling?
+	Object-oriented models are easier to extend when business rules change. They also simplify flow handling since data and behavior live together.
+
+Legacy Integration & Synchronization
+
+	Q: Why keep the legacy system running?
+	Some critical business functions like trade booking and reporting still depend on legacy components. Fully shutting it down wasn’t feasible for Day-1 delivery.
+
+	Q: How do we keep both systems in sync?
+	Data is backported from the new system to legacy systems, ensuring consistency while allowing both platforms to operate independently.
+
+	Q: Is there a risk of data inconsistency?
+	Controls were put in place through status tracking, flow states, and validation checks to minimize synchronization risks.
+
+Performance & Scale
+
+	Q: How did we validate system performance?
+	We performed stress testing using heavy data loads and parallel processing to simulate real-world scenarios.
+
+	Q: What scale was tested?
+	The system was validated against approximately 200,000 loan deals, ensuring it can handle current and near-future demand.
+
+	Q: Any performance bottlenecks identified?
+	Early tests helped identify areas for optimization, particularly around data processing and message handling.
+
+Delivery & Execution
+
+	Q: How was work tracked and prioritized?
+	Jira was used to track development items, with Day-1 and Day-2 prioritization to ensure critical functionality was delivered first.
+
+	Q: How were defects handled?
+	Bugs raised by testing were treated as high priority and addressed promptly to maintain release quality.
+
+	Q: What role did the scrum master play?
+	The scrum master ensured daily scrums ran smoothly, tracked progress, managed backlogs, and helped unblock issues.
+
+Lessons Learned / Future Direction
+
+	Q: What were the key learnings from this project?
+	Early investment in understanding business flows and legacy behavior saved time later. Cross-team collaboration was critical for success.
+
+	Q: What’s next for the platform?
+	Future phases can gradually migrate remaining legacy functionality and further optimize performance and data models.
+
+Quick Close (If Time Is Short)
+
+“If I had to summarize the technical takeaway—it’s not just a tech migration. It’s a shift toward clearer business-driven flows, better data modeling, and a scalable architecture that we can build on.”
