@@ -1,0 +1,20 @@
+SELECT 
+    c.TABLE_NAME AS TableName,
+    c.COLUMN_NAME AS `Column`,
+    c.DATA_TYPE AS ColumnType,
+    CASE WHEN c.COLUMN_KEY = 'PRI' THEN 'Yes' ELSE 'No' END AS `PrimaryKey(Yes/No)`,
+    CASE WHEN c.COLUMN_KEY = 'MUL' THEN 'Yes' ELSE 'No' END AS `ForeignKey(Yes/No)`,
+    IFNULL(kcu.REFERENCED_TABLE_NAME, '') AS RelatedTable,
+    CASE 
+        WHEN c.COLUMN_KEY = 'MUL' 
+        THEN CONCAT('"', c.COLUMN_NAME, '" is the primary joining key')
+        ELSE ''
+    END AS `How its related`
+FROM information_schema.COLUMNS c
+LEFT JOIN information_schema.KEY_COLUMN_USAGE kcu
+    ON c.TABLE_SCHEMA = kcu.TABLE_SCHEMA
+    AND c.TABLE_NAME = kcu.TABLE_NAME
+    AND c.COLUMN_NAME = kcu.COLUMN_NAME
+    AND kcu.REFERENCED_TABLE_NAME IS NOT NULL
+WHERE c.TABLE_SCHEMA = 'your_database_name'   -- ← Replace this
+ORDER BY c.TABLE_NAME, c.ORDINAL_POSITION;
